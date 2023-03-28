@@ -1,67 +1,42 @@
 #!/usr/bin/python3
-class Node:
-    def __init__(self, data, next_node=None):
-        """Defines a node of a singly linked list"""
-        self.data = data
-        self.next_node = next_node
+class Square:
+    """Defines a square"""
+    def __init__(self, size=0):
+        """Initialises the data"""
+        self.size = size
+
+    def area(self):
+        """Returns current square area"""
+        return self.__size**2
 
     @property
-    def data(self):
-        """data getter"""
-        return self.__data
+    def size(self):
+        """Getter method"""
+        return self.__size
 
-    @data.setter
-    def data(self, value):
-        """data setter"""
+    @size.setter
+    def size(self, value):
+        """Setter method"""
+        self.__size = value
         if type(value) != int:
-            raise TypeError("data must be an integer")
-        self.__data = value
+            raise TypeError("size must be an integer")
+        if value < 0:
+            raise ValueError("size must be >= 0")
 
-    @property
-    def next_node(self):
-        """next_node getter"""
-        return self.__next_node
+    def __lt__(self, other):
+        return self.area() < other.area()
 
-    @next_node.setter
-    def next_node(self, value):
-        """next_node setter"""
-        if value is not None and type(value) is not Node:
-            raise TypeError("next_node must be a Node object")
-        self.__next_node = value
+    def __le__(self, other):
+        return self.area() <= other.area()
 
+    def __eq__(self, other):
+        return self.area() == other.area()
 
-class SinglyLinkedList:
-    def __init__(self):
-        """Defines a singly linked list"""
-        self.__head = None
+    def __ne__(self, other):
+        return self.area() != other.area()
 
-    def sorted_insert(self, value):
-        new = Node(value)
-        tmp = self.__head
-        add_start = False
+    def __gt__(self, other):
+        return self.area() > other.area()
 
-        if not self.__head:
-            self.__head = new
-            new.next_node = None
-        else:
-            if value < self.__head.data:
-                add_start = True
-            while tmp.next_node and value > tmp.next_node.data\
-                    and not add_start:
-                tmp = tmp.next_node
-            if not add_start:
-                    new.next_node = tmp.next_node
-                    tmp.next_node = new
-            else:
-                new.next_node = tmp
-                self.__head = new
-            new.data = value
-
-    def __str__(self):
-        s = ""
-        current = self.__head
-
-        while current:
-            s += str(current.data) + '\n'
-            current = current.next_node
-        return s[: -1]
+    def __ge__(self, other):
+        return self.area() >= other.area()
