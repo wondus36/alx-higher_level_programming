@@ -1,29 +1,39 @@
-#include "Python.h"
+#!/usr/bin/python3
+"""
 
-/**
- * print_python_string - Prints information about Python strings.
- * @p: A PyObject string object.
- */
+This module defines a matrix division function
 
-void print_python_string(PyObject *p)
-{
-	long int length;
+"""
 
-	fflush(stdout);
 
-	printf("[.] string object info\n");
-	if (strcmp(p->ob_type->tp_name, "str") != 0)
-	{
-		printf("  [ERROR] Invalid String Object\n");
-		return;
-	}
+def matrix_divided(matrix, div):
+    """This function divides all elements of a matrix by a given number
 
-	length = ((PyASCIIObject *)(p))->length;
+    Args:
+        matrix: A list of lists (matrix)- members can be of type ints or floats
+        div: Number to be used for the division (can be a float or an integer)
+    Raises:
+        TypeError: If the matrix contains non-numbers
+        TypeError: If the matrix contains rows of different sizes
+        TypeError: If div is not an int or float
+        ZeroDivisionError: If div is 0
+    Returns:
+        A new matrix which represents the result of the divisions
+    """
+    if (not isinstance(matrix, list) or matrix == [] or
+            not all(isinstance(row, list) for row in matrix) or
+            not all((isinstance(ele, int) or isinstance(ele, float))
+                    for ele in [num for row in matrix for num in row])):
+        raise TypeError("matrix must be a matrix (list of lists) of "
+                        "integers/floats")
 
-	if (PyUnicode_IS_COMPACT_ASCII(p))
-		printf("  type: compact ascii\n");
-	else
-		printf("  type: compact unicode object\n");
-	printf("  length: %ld\n", length);
-	printf("  value: %ls\n", PyUnicode_AsWideCharString(p, &length));
-}
+    if not all(len(row) == len(matrix[0]) for row in matrix):
+        raise TypeError("Each row of the matrix must have the same size")
+
+    if not isinstance(div, int) and not isinstance(div, float):
+        raise TypeError("div must be a number")
+
+    if div == 0:
+        raise ZeroDivisionError("division by zero")
+
+    return ([list(map(lambda x: round(x / div, 2), row)) for row in matrix])
