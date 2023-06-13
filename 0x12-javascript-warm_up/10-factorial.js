@@ -1,12 +1,12 @@
 #!/usr/bin/node
-// JS to compute the factorial of a number
-'use strict';
-let a = Number(process.argv[2]);
-function factorialize (a) {
-  if (isNaN(a) || a === 1) {
-    return (1);
-  } else {
-    return (a * factorialize(a - 1));
+function factorial (n) {
+  if (n < 0) {
+    return (-1);
   }
+  if (n === 0 || isNaN(n)) {
+    return (1);
+  }
+  return (n * factorial(n - 1));
 }
-console.log(factorialize(a));
+
+console.log(factorial(Number(process.argv[2])));

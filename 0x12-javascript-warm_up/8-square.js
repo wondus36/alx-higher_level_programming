@@ -1,10 +1,11 @@
 #!/usr/bin/node
-// JS to print X square by number of passed argument
-'use strict';
-if (isNaN(process.argv[2])) {
+if (process.argv[2] === undefined || isNaN(process.argv[2])) {
   console.log('Missing size');
 } else {
-  for (let count = 0; count < process.argv[2]; count++) {
-    console.log('X'.repeat(process.argv[2]));
+  const x = Number(process.argv[2]);
+  let i = 0;
+  while (i < x) {
+    console.log('X'.repeat(x));
+    i++;
   }
 }

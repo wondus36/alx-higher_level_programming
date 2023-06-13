@@ -1,12 +1,11 @@
 #!/usr/bin/node
-// JS to print C is fun by number of passed in argument
-'use strict';
-let arg = process.argv[2];
-let count = 0;
-if (isNaN(arg)) {
+if (process.argv[2] === undefined || isNaN(process.argv[2])) {
   console.log('Missing number of occurrences');
-}
-while (count < arg) {
-  console.log('C is fun');
-  count++;
+} else {
+  const x = Number(process.argv[2]);
+  let i = 0;
+  while (i < x) {
+    console.log('C is fun');
+    i++;
+  }
 }
